@@ -13,7 +13,7 @@ import AppError from '../utils/AppError.js';
 const validate = (schema)=>{
     return (req,res,next)=>{
         try{
-            
+            const parsed = schema.parse(req.body);
             req.body = parsed
             next()
         }catch(error){

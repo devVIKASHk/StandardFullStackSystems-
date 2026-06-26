@@ -11,7 +11,7 @@ import config from '../config/env.js'
  * @returns 
  */
 
-const errorHandler = (err, req, res, next) => {
+const globalErrorHandler = (err, req, res, next) => {
     let statusCode = err.statusCode || 500;
     let message = err.message || 'Internal Server Error';
     let isOperational = err.isOperational || false;
@@ -80,4 +80,4 @@ const errorHandler = (err, req, res, next) => {
 }
 
 
-export default errorHandler;
+export default globalErrorHandler;

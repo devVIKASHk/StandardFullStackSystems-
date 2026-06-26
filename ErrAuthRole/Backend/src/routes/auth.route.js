@@ -1,6 +1,8 @@
 import {Router} from 'express';
-import authMiddleware from '../middlewares/auth.middleware';
-
+import authMiddleware from '../middlewares/auth.middleware.js';
+import { loginSchema, registerSchema } from '../../validators/auth.validator.js';
+import * as authController from '../controllers/auth.controller.js'
+import validate from '../middlewares/validate.middleware.js';
 
 
 
@@ -8,29 +10,29 @@ const router = Router()
 
 router
     .route('/register')
-    .post()
+    .post(validate(registerSchema),authController.register)
 
 router
     .route('/login')
-    .post()
+    .post(validate(loginSchema),authController.login)
 
 router
     .route('/refresh')
-    .post()
+    .post(authController.refresh)
 
 router.use(authMiddleware)
 
 router  
     .route('/logout')
-    .post()
+    .post(authController.logout)
 
 router
     .route('/logout-all')
-    .post()
+    .post(authController.logoutAllDevices)
 
 router
     .route('/me')
-    .get()
+    .get(authController.getMe)
 
 
 export default router;
