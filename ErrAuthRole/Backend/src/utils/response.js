@@ -6,7 +6,7 @@
 * @param {object} res 
 */
 
-const sendSuccess = (res,statusCode,message,data=null)=>{
+const sendSuccess = (res,data=null,message,statusCode=200)=>{
     return res.status(statusCode).json({
         success:true,
         message,

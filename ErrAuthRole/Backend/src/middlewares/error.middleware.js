@@ -15,6 +15,7 @@ const globalErrorHandler = (err, req, res, next) => {
     let statusCode = err.statusCode || 500;
     let message = err.message || 'Internal Server Error';
     let isOperational = err.isOperational || false;
+   
 
 
     logger.error({

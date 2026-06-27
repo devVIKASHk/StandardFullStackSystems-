@@ -4,6 +4,7 @@ import sessionRepository from "../repositories/session.repository.js";
 import AppError from "../utils/AppError.js"
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../utils/token.js";
 import userRepository from '../repositories/user.repository.js';
+import logger from '../utils/logger.js';
 
 const getSessionExpiry = ()=>{
     const expiry = new Date();

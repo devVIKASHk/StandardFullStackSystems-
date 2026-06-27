@@ -1,0 +1,1378 @@
+/**
+ * =============================================================
+ * MASTER DESIGN SYSTEM — Premium Dark Theme with Glassmorphism
+ * =============================================================
+ *
+ * This single CSS file powers the ENTIRE application's visual design.
+ * We use CSS Custom Properties (variables) so every color, spacing,
+ * and shadow can be changed from one place.
+ *
+ * DESIGN PHILOSOPHY:
+ * - Dark, immersive backgrounds (#0a0a0f → near-black)
+ * - Glassmorphism: semi-transparent cards with backdrop-blur
+ * - Indigo accent (#6366f1) with purple gradient highlights
+ * - Smooth micro-animations on every interaction
+ * - Inter font for clean, professional typography
+ *
+ * FILE STRUCTURE:
+ * 1. CSS Custom Properties (Design Tokens)
+ * 2. Global Reset & Base Styles
+ * 3. Typography
+ * 4. Layout (Container, Page)
+ * 5. Navbar
+ * 6. Buttons
+ * 7. Cards
+ * 8. Forms / Inputs
+ * 9. Auth Pages
+ * 10. Dashboard
+ * 11. Notes
+ * 12. Modal
+ * 13. Table
+ * 14. Badges
+ * 15. Utilities (Spinner, Empty State, Alerts)
+ * 16. Animations (@keyframes)
+ * 17. Responsive Breakpoints
+ * =============================================================
+ */
+
+/* =============================================================
+   1. CSS CUSTOM PROPERTIES — Design Tokens
+   =============================================================
+   These variables are our "single source of truth" for the design.
+   Change a variable here → it updates everywhere instantly.
+   ============================================================= */
+:root {
+  /* ---- Backgrounds ---- */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(255, 255, 255, 0.06);
+  --bg-input: rgba(255, 255, 255, 0.05);
+  --bg-input-focus: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+
+  /* ---- Text Colors ---- */
+  --text-primary: #e4e4e7;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-inverse: #0a0a0f;
+
+  /* ---- Accent / Brand Colors ---- */
+  --accent-primary: #6366f1;
+  --accent-primary-hover: #818cf8;
+  --accent-secondary: #8b5cf6;
+  --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --accent-gradient-text: linear-gradient(135deg, #818cf8, #a78bfa);
+  --accent-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+  --accent-glow-strong: 0 0 40px rgba(99, 102, 241, 0.4);
+
+  /* ---- Semantic Colors ---- */
+  --success: #22c55e;
+  --success-bg: rgba(34, 197, 94, 0.1);
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-bg: rgba(239, 68, 68, 0.1);
+  --warning: #f59e0b;
+  --warning-bg: rgba(245, 158, 11, 0.1);
+  --info: #3b82f6;
+  --info-bg: rgba(59, 130, 246, 0.1);
+
+  /* ---- Border Radius ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+
+  /* ---- Transitions ---- */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* ---- Spacing Scale ---- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+}
+
+/* =============================================================
+   2. GLOBAL RESET & BASE STYLES
+   =============================================================
+   A minimal reset that ensures consistent rendering across browsers.
+   We also set the dark background and font here.
+   ============================================================= */
+
+/* Universal box-sizing reset — border-box makes sizing intuitive */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base HTML and body styling */
+html {
+  /* Smooth scrolling for anchor links */
+  scroll-behavior: smooth;
+  /* Prevent horizontal overflow on mobile */
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  /* Font smoothing for crisp text on dark backgrounds */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Minimum height to always fill viewport */
+  min-height: 100vh;
+}
+
+/* ---- Custom Scrollbar (WebKit browsers) ---- */
+/* Thin, dark scrollbar that blends with our dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) var(--bg-primary);
+}
+
+/* Remove default link styling */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Remove default list styling */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Make images responsive by default */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* =============================================================
+   3. TYPOGRAPHY
+   ============================================================= */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Gradient text utility — used for headings and brand elements */
+.gradient-text {
+  background: var(--accent-gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =============================================================
+   4. LAYOUT — Container & Page
+   ============================================================= */
+
+/* Main container — constrains content width and centers it */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+  width: 100%;
+}
+
+/* Page wrapper — adds padding and entry animation */
+.page {
+  padding: var(--space-xl) 0;
+  animation: fadeIn 0.4s ease, slideUp 0.4s ease;
+  min-height: calc(100vh - 72px); /* Account for navbar height */
+}
+
+/* Main content area below navbar */
+.main-content {
+  padding-top: var(--space-md);
+}
+
+/* =============================================================
+   5. NAVBAR — Glassmorphism Navigation Bar
+   =============================================================
+   The navbar uses backdrop-filter for the glass effect.
+   It sticks to the top as you scroll (position: sticky).
+   ============================================================= */
+
+.navbar {
+  /* Glassmorphism: semi-transparent bg + blur */
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /* Stick to top on scroll */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  /* Subtle bottom border for separation */
+  border-bottom: 1px solid var(--glass-border);
+  /* Smooth shadow */
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Inner navbar layout — flex for horizontal arrangement */
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+/* Brand logo — gradient text for visual pop */
+.nav-brand {
+  font-size: 1.35rem;
+  font-weight: 700;
+  background: var(--accent-gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.nav-brand:hover {
+  opacity: 0.85;
+}
+
+.nav-brand-icon {
+  font-size: 1.5rem;
+  /* Reset the gradient fill for the emoji */
+  -webkit-text-fill-color: initial;
+}
+
+/* Navigation links container */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* Individual nav link */
+.nav-link {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Active nav link — shows which page you're on */
+.nav-link.active {
+  color: var(--accent-primary-hover);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+/* Right side of navbar — user info and logout */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* User greeting text */
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.nav-user-name {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* =============================================================
+   6. BUTTONS — Various button styles
+   =============================================================
+   All buttons share a base .btn class, then get modified
+   by variant classes like .btn-primary, .btn-danger, etc.
+   ============================================================= */
+
+/* Base button — shared by all button variants */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Disabled state for all buttons */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Primary button — gradient background with glow effect */
+.btn-primary {
+  background: var(--accent-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: var(--accent-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Danger button — for destructive actions */
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger-hover);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Outline button — bordered, transparent background */
+.btn-outline {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-outline:hover:not(:disabled) {
+  color: var(--text-primary);
+  border-color: var(--glass-border-hover);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Ghost button — no border, very subtle */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 8px 12px;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Small button variant */
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Icon-only button */
+.btn-icon {
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.btn-icon:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-icon.danger:hover {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+
+/* =============================================================
+   7. CARDS — Glassmorphism Cards
+   =============================================================
+   Cards use semi-transparent backgrounds with backdrop-blur
+   to create the frosted glass effect.
+   ============================================================= */
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Hover lift effect — card rises slightly on hover */
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Card without hover effect */
+.card-static {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* =============================================================
+   8. FORMS / INPUTS
+   =============================================================
+   Dark-themed inputs that glow with the accent color on focus.
+   ============================================================= */
+
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+/* Form labels */
+.form-label {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+/* Text inputs and textareas */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg-input);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  transition: all var(--transition-normal);
+  outline: none;
+}
+
+/* Placeholder text */
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Focus state — accent glow border */
+.form-input:focus {
+  background: var(--bg-input-focus);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* Textarea variant */
+textarea.form-input {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Form helper text */
+.form-helper {
+  margin-top: var(--space-xs);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Form error text */
+.form-error {
+  margin-top: var(--space-xs);
+  font-size: 0.8rem;
+  color: var(--danger);
+}
+
+/* Select dropdown */
+.form-select {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+  appearance: none;
+  /* Custom dropdown arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a1a1aa' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
+}
+
+.form-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.form-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* =============================================================
+   9. AUTH PAGES — Login & Register
+   =============================================================
+   Centered layout with a large glassmorphism card.
+   ============================================================= */
+
+/* Full-viewport centered layout for auth pages */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  /* Subtle radial gradient background for depth */
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    var(--bg-primary);
+}
+
+/* Auth card — the main login/register card */
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-xl);
+  animation: fadeIn 0.5s ease, slideUp 0.5s ease;
+}
+
+/* Auth page title — large gradient text */
+.auth-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  background: var(--accent-gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: var(--space-sm);
+}
+
+/* Auth page subtitle */
+.auth-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-xl);
+}
+
+/* Auth form submit button — full width */
+.auth-form .btn-primary {
+  width: 100%;
+  padding: 13px;
+  font-size: 0.95rem;
+  margin-top: var(--space-sm);
+}
+
+/* Auth footer — "Don't have an account?" link */
+.auth-footer {
+  text-align: center;
+  margin-top: var(--space-lg);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.auth-footer a {
+  color: var(--accent-primary-hover);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.auth-footer a:hover {
+  color: var(--accent-primary);
+  text-decoration: underline;
+}
+
+/* Auth divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: var(--space-lg) 0;
+  gap: var(--space-md);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--glass-border);
+}
+
+/* =============================================================
+   10. DASHBOARD — Stats & Welcome Section
+   ============================================================= */
+
+/* Page header — title + action buttons on the same row */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: var(--space-xs);
+}
+
+/* Welcome section */
+.welcome-section {
+  margin-bottom: var(--space-xl);
+}
+
+.welcome-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.welcome-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Dashboard stats grid — responsive 3-column layout */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+/* Individual stat card */
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  /* Accent-colored top border for visual hierarchy */
+  border-top: 3px solid var(--accent-primary);
+  transition: all var(--transition-normal);
+}
+
+.stat-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Large stat value — gradient text */
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  background: var(--accent-gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-xs);
+}
+
+/* Stat label */
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Stat icon */
+.stat-icon {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+/* Quick actions row */
+.quick-actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* =============================================================
+   11. NOTES — Grid & Cards
+   ============================================================= */
+
+/* Notes grid — responsive CSS grid */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-lg);
+}
+
+/* Individual note card */
+.note-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s ease;
+}
+
+.note-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+/* Note title */
+.note-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--text-primary);
+  /* Clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Note description — truncated */
+.note-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+  flex: 1;
+  /* Clamp to 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Note metadata — owner, date */
+.note-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.note-owner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* Note action buttons row */
+.note-actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* =============================================================
+   12. MODAL — Overlay + Content
+   =============================================================
+   The modal uses a dark overlay with backdrop-blur,
+   and the content slides up with an animation.
+   ============================================================= */
+
+/* Dark overlay behind the modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: var(--space-lg);
+  animation: fadeIn 0.2s ease;
+}
+
+/* Modal content box */
+.modal {
+  width: 100%;
+  max-width: 500px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-xl);
+  animation: slideUp 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Modal header */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Modal footer — action buttons */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Confirm dialog specific styling */
+.confirm-dialog {
+  text-align: center;
+  max-width: 400px;
+}
+
+.confirm-dialog .modal-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.confirm-dialog .modal-message {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+  font-size: 0.95rem;
+}
+
+.confirm-dialog .modal-footer {
+  justify-content: center;
+  border-top: none;
+  padding-top: 0;
+}
+
+/* =============================================================
+   13. TABLE — Data Tables
+   ============================================================= */
+
+.table-container {
+  overflow-x: auto;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+/* Table header */
+.table thead th {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 14px 20px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+/* Table rows */
+.table tbody tr {
+  border-bottom: 1px solid var(--glass-border);
+  transition: background var(--transition-fast);
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+/* Row hover highlight */
+.table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Table cells */
+.table tbody td {
+  padding: 14px 20px;
+  color: var(--text-secondary);
+}
+
+/* Table cell with actions */
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* =============================================================
+   14. BADGES — Role & Status Pills
+   ============================================================= */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Admin badge — accent colored */
+.badge-admin {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--accent-primary-hover);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+/* User badge — neutral */
+.badge-user {
+  background: rgba(161, 161, 170, 0.1);
+  color: var(--text-secondary);
+  border: 1px solid rgba(161, 161, 170, 0.2);
+}
+
+/* Success badge */
+.badge-success {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* =============================================================
+   15. UTILITIES — Spinner, Empty State, Alerts
+   ============================================================= */
+
+/* ---- Loading Spinner ---- */
+/* Full-page centered spinner shown while data loads */
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Inline spinner (for buttons, etc) */
+.spinner-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3xl) 0;
+}
+
+/* The actual spinner element — a rotating ring */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.spinner-sm {
+  width: 18px;
+  height: 18px;
+  border-width: 2px;
+}
+
+/* Spinner label */
+.spinner-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ---- Empty State ---- */
+/* Shown when there's no data (e.g., no notes yet) */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3xl) var(--space-lg);
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+.empty-state-icon {
+  font-size: 3.5rem;
+  margin-bottom: var(--space-md);
+  opacity: 0.6;
+}
+
+.empty-state-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.empty-state-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  max-width: 400px;
+  margin-bottom: var(--space-lg);
+}
+
+/* ---- Alerts ---- */
+.alert {
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-md);
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.alert-error {
+  background: var(--danger-bg);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: var(--danger);
+}
+
+.alert-success {
+  background: var(--success-bg);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: var(--success);
+}
+
+.alert-warning {
+  background: var(--warning-bg);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: var(--warning);
+}
+
+.alert-info {
+  background: var(--info-bg);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: var(--info);
+}
+
+/* ---- 404 Page ---- */
+.not-found-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-lg);
+}
+
+.not-found-code {
+  font-size: 6rem;
+  font-weight: 700;
+  background: var(--accent-gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: var(--space-md);
+}
+
+.not-found-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.not-found-text {
+  color: var(--text-muted);
+  margin-bottom: var(--space-xl);
+}
+
+/* =============================================================
+   16. ANIMATIONS — @keyframes
+   =============================================================
+   These reusable keyframe animations add life to the UI.
+   ============================================================= */
+
+/* Simple fade in from transparent to fully visible */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide up from below — used with fadeIn for page transitions */
+@keyframes slideUp {
+  from {
+    transform: translateY(16px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Continuous rotation — used for the loading spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulsing glow — used for attention-grabbing elements */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.4);
+  }
+}
+
+/* Scale in — used for modals */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* =============================================================
+   17. RESPONSIVE BREAKPOINTS
+   =============================================================
+   Mobile-first adjustments for smaller screens.
+   ============================================================= */
+
+/* ---- Tablet and below (≤ 768px) ---- */
+@media (max-width: 768px) {
+  /* Stack navbar vertically */
+  .navbar-inner {
+    flex-wrap: wrap;
+    height: auto;
+    padding: var(--space-md) var(--space-lg);
+    gap: var(--space-sm);
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .nav-right {
+    gap: var(--space-sm);
+  }
+
+  /* Single column for dashboard stats */
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  /* Single column for notes grid */
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Full-width auth card */
+  .auth-card {
+    padding: var(--space-lg);
+  }
+
+  /* Page header stacks */
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Modal adjusts */
+  .modal {
+    margin: var(--space-md);
+    padding: var(--space-lg);
+  }
+
+  .welcome-title {
+    font-size: 1.4rem;
+  }
+}
+
+/* ---- Small mobile (≤ 480px) ---- */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  .nav-link {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  .auth-card {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .auth-title {
+    font-size: 1.4rem;
+  }
+
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+
+  .stat-value {
+    font-size: 1.4rem;
+  }
+
+  .table thead th,
+  .table tbody td {
+    padding: 10px 14px;
+    font-size: 0.8rem;
+  }
+}
+
+/* ---- Large screens (≥ 1200px) ---- */
+@media (min-width: 1200px) {
+  .notes-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* =============================================================
+   REACT HOT TOAST OVERRIDES
+   =============================================================
+   Customize toast notifications to match our dark theme.
+   ============================================================= */
+/* The toast library applies inline styles, so we use higher specificity
+   to override where needed. Most theming is done via the Toaster component
+   config in App.jsx. */

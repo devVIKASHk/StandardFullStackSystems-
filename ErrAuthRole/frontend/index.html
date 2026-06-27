@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--
+      =============================================================
+      HTML ENTRY POINT
+      =============================================================
+      This is the single HTML file for our entire React SPA.
+      Vite injects the compiled JS bundle at the bottom.
+
+      We load Google Fonts (Inter) here so it's available globally
+      before any React component renders. Inter is a clean, modern
+      sans-serif font perfect for UI applications.
+      =============================================================
+    -->
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AuthGuard — A secure access manager with role-based access control. Manage users, roles, and permissions with a premium dark-themed UI."
+    />
+
+    <!-- Favicon: shield emoji as SVG for branding -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>"
+    />
+
+    <!-- Google Fonts: Inter — weights 300 (light), 400 (normal), 500 (medium), 600 (semi-bold), 700 (bold) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>AuthGuard | Secure Access Manager</title>
+  </head>
+  <body>
+    <!--
+      The root div where React mounts our entire application.
+      React's createRoot() targets this element in main.jsx.
+    -->
+    <div id="root"></div>
+
+    <!--
+      Vite automatically injects the script tag for our entry point (src/main.jsx)
+      during development AND production builds. No manual script tag needed!
+    -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

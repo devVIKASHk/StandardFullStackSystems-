@@ -17,9 +17,9 @@ const validate = (schema)=>{
             req.body = parsed
             next()
         }catch(error){
-            if (error.name='ZodError'){
+            if (error.name==='ZodError'){
                 const message = error.errors.map((err)=>err.message).join(', ');
-                throw new AppError(message,400)
+                throw new AppError(message,400,'ZodError')
             }
             throw error
         }

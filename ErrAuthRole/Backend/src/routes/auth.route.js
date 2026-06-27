@@ -18,7 +18,7 @@ router
 
 router
     .route('/refresh')
-    .post(authController.refresh)
+    .post(authController.refreshToken)
 
 router.use(authMiddleware)
 

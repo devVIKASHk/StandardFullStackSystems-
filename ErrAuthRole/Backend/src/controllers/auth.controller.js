@@ -1,4 +1,4 @@
-import { COOKIE_OPTIONS } from "../constants.js";
+import { COOKIE_OPTIONS } from "../constants/index.js";
 import authService from "../services/auth.service.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import sendSuccess from "../utils/response.js";
