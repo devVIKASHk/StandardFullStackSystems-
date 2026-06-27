@@ -1,6 +1,6 @@
 import noteService from '../services/note.service.js';
 import asyncHandler from '../utils/asyncHandler.js';
-import { sendSuccess } from '../utils/response.js';
+import  sendSuccess  from '../utils/response.js';
 
 const createNote = asyncHandler(async (req, res) => {
   const note = await noteService.createNote(req.body, req.user._id);

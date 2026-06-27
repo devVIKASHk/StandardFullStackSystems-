@@ -1,5 +1,5 @@
 
-import AppError from "../utils/AppError";
+import AppError from "../utils/AppError.js";
 
 /**
  * @param {...string} allowedRoles 

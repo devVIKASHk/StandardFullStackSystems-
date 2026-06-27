@@ -8,7 +8,7 @@ const router = Router()
 
 router.use('/auth',authRoute);
 router.use('/users',userRoute);
-router.use('/notes', noteRoutes);
+router.use('/notes', noteRoute);
 
 
 export default router;

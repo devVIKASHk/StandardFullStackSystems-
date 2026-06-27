@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import authMiddleware from '../middlewares/auth.middleware.js';
 import { ROLES } from '../constants/index.js';
-import uthorizedRoles from '../middlewares/role.middleware.js';
+import authorizedRoles from '../middlewares/role.middleware.js';
 import * as userController from '../controllers/user.controller.js'
 
 

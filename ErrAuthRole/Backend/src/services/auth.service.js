@@ -163,9 +163,9 @@ const authService = {
         })
 
         const salt = await bcrypt.genSalt(10);
-        const newRefreshToken = await bcrypt.hash(newRefreshToken,salt);
+        const newRefreshTokenHash = await bcrypt.hash(newRefreshToken,salt);
 
-        await sessionRepository.updateTokenHash(session._id,newRefreshToken);
+        await sessionRepository.updateTokenHash(session._id,newRefreshTokenHash);
 
         logger.info(`Access token refreshed for session: ${session._id}`);
 
