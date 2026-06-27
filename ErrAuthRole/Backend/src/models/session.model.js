@@ -50,7 +50,7 @@ const sessionSchema = new mongoose.Schema(
 
 
 sessionSchema.methods.isValid = function (){
-    return !this.revokedAt && this.expiredAt > new Date()
+    return !this.revokedAt && this.expiresAt > new Date()
 }
 
 

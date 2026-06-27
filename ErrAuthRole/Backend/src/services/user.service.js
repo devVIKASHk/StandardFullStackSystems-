@@ -1,5 +1,6 @@
 import userRepository from "../repositories/user.repository.js"
 import AppError from "../utils/AppError.js";
+import logger from "../utils/logger.js";
 
 
 const userService = {

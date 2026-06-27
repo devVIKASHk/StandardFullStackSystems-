@@ -12,6 +12,11 @@ const userRepository = {
 
     },
 
+    findByEmailWithPassword: async (email)=>{
+        return await User.findOne({email}).select('+password')
+
+    },
+
     /**
      * @param {string} id 
      * @returns {Promise<Object|null>}

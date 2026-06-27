@@ -42,7 +42,7 @@ export const login = asyncHandler(async (req,res)=>{
 export const refreshToken = asyncHandler(async (req,res)=>{
     const oldRefreshToken = req.cookies.refreshToken;
 
-    const {accessToken,refreshToken:newRefreshToken} = authService.refreshAccessToken(oldRefreshToken);
+    const {accessToken,refreshToken:newRefreshToken} = await authService.refreshAccessToken(oldRefreshToken);
 
     res.cookie('refreshToken',newRefreshToken,COOKIE_OPTIONS);
 
@@ -61,7 +61,7 @@ export const logout = asyncHandler(async (req,res)=>{
 });
 
 export const logoutAllDevices = asyncHandler(async (req,res)=>{
-    const user = await authService.getCurrentUser(req.user._id);
+    await authService.logoutAllDevices(req.user._id);
 
     res.clearCookie('refreshToken',COOKIE_OPTIONS);
 

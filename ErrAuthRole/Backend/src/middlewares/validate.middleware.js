@@ -1,31 +1,23 @@
-import AppError from '../utils/AppError.js';
+import { ZodError } from "zod";
+import AppError from "../utils/AppError.js";
 
-/**
- *  @param {import('zod').ZodSchema} schema 
- *  @returns {Function}
- * 
- */
+const validate = (schema) => {
+    return (req, res, next) => {
+        try {
+            req.body = schema.parse(req.body);
+            next();
+        } catch (error) {
+            if (error instanceof ZodError) {
+                const message = error.issues
+                    .map(issue => issue.message)
+                    .join(", ");
 
-
-
-
-
-const validate = (schema)=>{
-    return (req,res,next)=>{
-        try{
-            const parsed = schema.parse(req.body);
-            req.body = parsed
-            next()
-        }catch(error){
-            if (error.name==='ZodError'){
-                const message = error.errors.map((err)=>err.message).join(', ');
-                throw new AppError(message,400,'ZodError')
+                throw new AppError(message, 400, "ZodError");
             }
-            throw error
+
+            throw error;
         }
-
-
-    }
-}
+    };
+};
 
 export default validate;

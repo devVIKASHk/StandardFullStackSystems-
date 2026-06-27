@@ -1,4 +1,4 @@
-import env from '../../validators/env.validator.js';
+import env from '../validators/env.validator.js';
 
 // Environment Variables constants
 const CONFIG = Object.freeze({

@@ -30,7 +30,7 @@ export default defineConfig({
 
   /* Dev server configuration */
   server: {
-    port: 3000, // Run our frontend on port 3000
+    port: 5174, // Run our frontend on port 3000
     open: true, // Auto-open browser when dev server starts
   },
 });

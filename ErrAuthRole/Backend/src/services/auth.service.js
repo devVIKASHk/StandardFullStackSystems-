@@ -27,24 +27,20 @@ const authService = {
             role:user.role,
         });
 
-        const refreshToken = await generateRefreshToken({id:user._id});
-
-        const salt = await bcrypt.genSalt(10);
-        const refreshTokenHash = await bcrypt.hash(refreshToken,salt);
-        
         const session = await sessionRepository.createSession({
             userId:user._id,
-            currentRefreshTokenHash:refreshToken,
+            currentRefreshTokenHash:'temp',
             deviceInfo:'Unknown Device',
             ipAddress:'Unknown IP',
             expiresAt: getSessionExpiry()
 
         });
 
-        const finalRefreshToken = generateRefreshToken({id:user._id,sessionId:session._id});
-        const finalHash = await bcrypt.hash(finalRefreshToken,salt);
+        const refreshToken = generateRefreshToken({id:user._id,sessionId:session._id});
+        const salt = await bcrypt.genSalt(10);
+        const refreshTokenHash = await bcrypt.hash(refreshToken,salt);
 
-        await sessionRepository.updateTokenHash(session._id,finalHash)
+        await sessionRepository.updateTokenHash(session._id,refreshTokenHash)
 
 
         return {
@@ -56,13 +52,13 @@ const authService = {
 
             },
             accessToken,
-            refreshToken:finalRefreshToken
+            refreshToken
         }
 
     },
 
     login: async (email,password,userAgent,ipAddress)=>{
-        const user = userRepository.findByEmail(email);
+        const user = await userRepository.findByEmailWithPassword(email);
 
         if (!user) throw new AppError('Invalid Credentials',401);
 
@@ -74,22 +70,22 @@ const authService = {
 
         const accessToken = generateAccessToken({id:user._id,role:user.role});
 
-        const session = sessionRepository.createSession({
+        const session = await sessionRepository.createSession({
             userId:user._id,
             currentRefreshTokenHash:'temp',
             deviceInfo: 'Parsed Device Info',
             userAgent:userAgent || 'Unknown UserAgent',
-            ipAddres:ipAddress || 'Unknown IP',
+            ipAddress:ipAddress || 'Unknown IP',
             expiresAt:getSessionExpiry()
         })
 
 
-        const refreshToken = generateAccessToken({id:user._id,sessionId:session._id});
+        const refreshToken = generateRefreshToken({id:user._id,sessionId:session._id});
 
         const salt = await bcrypt.genSalt(10);
         const refreshTokenHash = await bcrypt.hash(refreshToken,salt);
 
-        await sessionRepository.updateTokenHash(refreshTokenHash);
+        await sessionRepository.updateTokenHash(session._id,refreshTokenHash);
 
         logger.info(`User logged in: ${email}`);
 

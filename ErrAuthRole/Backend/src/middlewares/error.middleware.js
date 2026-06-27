@@ -34,7 +34,7 @@ const globalErrorHandler = (err, req, res, next) => {
     }
 
 
-    if (err.code = 11000) {
+    if (err.code === 11000) {
         statusCode = 409;
         message = 'Email already exists';
         isOperational = true
