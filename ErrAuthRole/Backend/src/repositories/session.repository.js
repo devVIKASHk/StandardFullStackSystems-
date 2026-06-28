@@ -5,7 +5,7 @@ const sessionRepository = {
     /**
      * Create new session.
     */
-   createSession: async (sesionPayload)=>{
+   createSession: async (sessionPayload)=>{
     return await Session.create(sessionPayload);
    },
 
