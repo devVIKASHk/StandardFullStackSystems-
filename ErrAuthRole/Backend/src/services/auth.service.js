@@ -15,8 +15,8 @@ const getSessionExpiry = ()=>{
 const authService = {
     register :async (userName,email,password)=>{
         const existingUser = await userRepository.findByEmail(email);
-
         if (existingUser) throw new AppError('Email already registered',409);
+        
         
         const user = await userRepository.createUser({userName,email,password});
 

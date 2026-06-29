@@ -20,7 +20,7 @@ const NotesPage = () => {
         try {
             setLoading(true);
             const res = await getNotes();
-            setNotes(res.data);
+            setNotes(res.data.notes);
         } catch (error) {
             // Ignored, global interceptor handles it
         } finally {
