@@ -605,10 +605,10 @@ All errors flow through a single global error handler. This keeps error handling
 
 | Method | Endpoint | Auth? | Role? | Description |
 |--------|----------|:-----:|:-----:|-------------|
-| `POST` | `/api/auth/register` | ❌ | — | Create a new user account |
-| `POST` | `/api/auth/login` | ❌ | — | Login and receive tokens |
-| `POST` | `/api/auth/logout` | ✅ | — | Clear refresh token and cookie |
-| `POST` | `/api/auth/refresh` | ❌* | — | Get new tokens using refresh cookie |
+| `POST` | `/auth/register` | ❌ | — | Create a new user account |
+| `POST` | `/auth/login` | ❌ | — | Login and receive tokens |
+| `POST` | `/auth/logout` | ✅ | — | Clear refresh token and cookie |
+| `POST`/auth/refresh` | ❌* | — | Get new tokens using refresh cookie |
 
 > *`/refresh` doesn't need the Authorization header — it reads the refresh token from the httpOnly cookie.
 
@@ -616,21 +616,21 @@ All errors flow through a single global error handler. This keeps error handling
 
 | Method | Endpoint | Auth? | Role? | Description |
 |--------|----------|:-----:|:-----:|-------------|
-| `GET` | `/api/users/me` | ✅ | — | Get current user's profile |
-| `PATCH` | `/api/users/me` | ✅ | — | Update current user's profile |
-| `GET` | `/api/users` | ✅ | `ADMIN` | Get list of all users |
-| `DELETE` | `/api/users/:id` | ✅ | `ADMIN` | Delete a user by ID |
-| `PATCH` | `/api/users/:id/role` | ✅ | `ADMIN` | Change a user's role |
+| `GET` | `/users/me` | ✅ | — | Get current user's profile |
+| `PATCH` | `/users/me` | ✅ | — | Update current user's profile |
+| `GET` | `/users` | ✅ | `ADMIN` | Get list of all users |
+| `DELETE` | `/users/:id` | ✅ | `ADMIN` | Delete a user by ID |
+| `PATCH` | `/users/:id/role` | ✅ | `ADMIN` | Change a user's role |
 
 ### Note Routes (`/api/notes`)
 
 | Method | Endpoint | Auth? | Role? | Description |
 |--------|----------|:-----:|:-----:|-------------|
-| `POST` | `/api/notes` | ✅ | — | Create a new note |
-| `GET` | `/api/notes` | ✅ | — | Get all notes owned by current user |
-| `GET` | `/api/notes/:id` | ✅ | — | Get a specific note (must be owner) |
-| `PATCH` | `/api/notes/:id` | ✅ | — | Update a note (must be owner) |
-| `DELETE` | `/api/notes/:id` | ✅ | — | Delete a note (must be owner) |
+| `POST` | `/notes` | ✅ | — | Create a new note |
+| `GET` | `/notes` | ✅ | — | Get all notes owned by current user |
+| `GET` | `/notes/:id` | ✅ | — | Get a specific note (must be owner) |
+| `PATCH` | `/notes/:id` | ✅ | — | Update a note (must be owner) |
+| `DELETE` | `/notes/:id` | ✅ | — | Delete a note (must be owner) |
 
 ---
 
